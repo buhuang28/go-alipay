@@ -1,5 +1,6 @@
 package model
 
+// 支付宝订单表
 type AlipayOrder struct {
 	ID uint `gorm:"primaryKey;autoIncrement;not null;"`
 
@@ -46,4 +47,8 @@ type AlipayOrder struct {
 
 	//支付状态
 	PayStatus int
+}
+
+func (a *AlipayOrder) TableName() string {
+	return "alipay_order"
 }
