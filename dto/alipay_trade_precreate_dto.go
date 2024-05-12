@@ -1,5 +1,7 @@
 package dto
 
+import "encoding/json"
+
 // 参考 https://opendocs.alipay.com/apis/02890k?pathHash=0f11e06a
 type (
 	AlipayTradePrecreateDTO struct {
@@ -91,4 +93,9 @@ func NewBaseAlipayTradePrecreateDTO(outTradeNo, totalAmount, subject, body strin
 		Subject:     subject,
 		Body:        body,
 	}
+}
+
+func (a *AlipayTradePrecreateDTO) ToString() string {
+	marshal, _ := json.Marshal(a)
+	return string(marshal)
 }
