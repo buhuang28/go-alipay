@@ -146,7 +146,7 @@ func HttpGetWithHeader(api string, h map[string]string) HttpResp {
 	return result
 }
 
-func HttpPostWithForm(api string, data url.Values) HttpResp {
+func HttpPostForm(api string, data url.Values) HttpResp {
 	var result HttpResp
 	r, err := http.NewRequest("POST", api, strings.NewReader(data.Encode())) // URL-encoded payload
 	if err != nil {

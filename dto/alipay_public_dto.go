@@ -6,6 +6,9 @@ import (
 	"github.com/buhuang28/go-alipay/cst"
 	"github.com/buhuang28/go-alipay/utils"
 	log "github.com/sirupsen/logrus"
+	"net/url"
+	"reflect"
+	"strings"
 	"time"
 )
 
@@ -83,4 +86,23 @@ func (a *AlipayPublicDTO) RSASign() error {
 	}
 	a.Sign = sign
 	return nil
+}
+
+func (a *AlipayPublicDTO) ToUrlValues() url.Values {
+	var data url.Values
+	tof := reflect.TypeOf(a)
+	vof := reflect.ValueOf(a)
+	for i := 0; i < tof.NumField(); i++ {
+		tag := tof.Field(i).Tag.Get("json")
+		tag, _, ok := strings.Cut(tag, ",omitempty")
+		v := vof.Field(i).String()
+		if ok {
+			if v == "" {
+				data.Add(tag, "")
+			}
+		} else {
+			data.Add(tag, v)
+		}
+	}
+	return data
 }

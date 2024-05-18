@@ -5,4 +5,6 @@ const (
 	ALIPAY_CHARSET   = "utf-8"
 	ALIPAY_SIGN_TYPE = "RSA2"
 	ALIPAY_FORMAT    = "JSON"
+
+	TRADE_PRECREATE_METHOD = "alipay.trade.precreate"
 )
