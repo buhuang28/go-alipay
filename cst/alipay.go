@@ -7,4 +7,5 @@ const (
 	ALIPAY_FORMAT    = "JSON"
 
 	TRADE_PRECREATE_METHOD = "alipay.trade.precreate"
+	ALIPAY_SUCCESS_CODE    = "10000"
 )

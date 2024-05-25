@@ -4,7 +4,7 @@ import "encoding/json"
 
 // 参考 https://opendocs.alipay.com/apis/02890k?pathHash=0f11e06a
 type (
-	AlipayTradePrecreateDTO struct {
+	AlipayTradePrecreateReq struct {
 		OutTradeNo           string         `json:"out_trade_no,omitempty"`
 		TotalAmount          string         `json:"total_amount,omitempty"`
 		Subject              string         `json:"subject,omitempty"`
@@ -86,8 +86,8 @@ type (
 	}
 )
 
-func NewBaseAlipayTradePrecreateDTO(outTradeNo, totalAmount, subject, body string) AlipayTradePrecreateDTO {
-	return AlipayTradePrecreateDTO{
+func NewBaseAlipayTradePrecreateReq(outTradeNo, totalAmount, subject, body string) AlipayTradePrecreateReq {
+	return AlipayTradePrecreateReq{
 		OutTradeNo:  outTradeNo,
 		TotalAmount: totalAmount,
 		Subject:     subject,
@@ -95,7 +95,7 @@ func NewBaseAlipayTradePrecreateDTO(outTradeNo, totalAmount, subject, body strin
 	}
 }
 
-func (a *AlipayTradePrecreateDTO) ToString() string {
+func (a *AlipayTradePrecreateReq) ToString() string {
 	marshal, _ := json.Marshal(a)
 	return string(marshal)
 }

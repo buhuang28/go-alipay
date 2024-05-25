@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-type AlipayPublicDTO struct {
+type AlipayPublicReq struct {
 	AppId        string `json:"app_id"`                   //支付宝分配给开发者的应用ID
 	Method       string `json:"method"`                   //接口名称
 	Format       string `json:"format,omitempty"`         //仅支持JSON
@@ -26,8 +26,8 @@ type AlipayPublicDTO struct {
 	BizContent   string `json:"biz_content"`              //请求参数的集合，最大长度不限，除公共参数外所有请求参数都必须放在这个参数中传递，具体参照各产品快速接入文档
 }
 
-func NewAlipayPublicDTO(method, notifyUrl, bizContent string) AlipayPublicDTO {
-	return AlipayPublicDTO{
+func NewAlipayPublicReq(method, notifyUrl, bizContent string) AlipayPublicReq {
+	return AlipayPublicReq{
 		AppId:      caches.AlipayConfigCache.AlipayAppId,
 		Method:     method,
 		Format:     cst.ALIPAY_FORMAT,
@@ -40,7 +40,7 @@ func NewAlipayPublicDTO(method, notifyUrl, bizContent string) AlipayPublicDTO {
 	}
 }
 
-func (a *AlipayPublicDTO) RSASign() error {
+func (a *AlipayPublicReq) RSASign() error {
 	/*
 		加签原理
 		1. 获取所有支付宝开放平台的 post 内容，不包括字节类型参数，如文件、字节流，剔除 sign 字段，剔除值为空的参数；
@@ -61,7 +61,7 @@ func (a *AlipayPublicDTO) RSASign() error {
 	buf.WriteString("&charset=")
 	buf.WriteString(a.Charset)
 	if a.Format != "" {
-		buf.WriteString("forma=")
+		buf.WriteString("format=")
 		buf.WriteString(a.Format)
 	}
 	buf.WriteString("&method=")
@@ -88,7 +88,7 @@ func (a *AlipayPublicDTO) RSASign() error {
 	return nil
 }
 
-func (a *AlipayPublicDTO) ToUrlValues() url.Values {
+func (a *AlipayPublicReq) ToUrlValues() url.Values {
 	var data url.Values
 	tof := reflect.TypeOf(a)
 	vof := reflect.ValueOf(a)
