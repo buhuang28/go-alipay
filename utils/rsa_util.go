@@ -56,20 +56,20 @@ func RsaSha256(privateRaw string, msg string) (string, error) {
 	return encodedSig, nil
 }
 
-func Rsa2PubSign(publicKey, signContent, sign string) bool {
+func Rsa2PubSign(publicKey, signContent, sign string) error {
 	hashed := sha256.Sum256([]byte(signContent))
 	pubKey, err := ParsePublicKey(publicKey)
 	if err != nil {
 		log.Error(err, "rsa2 public check sign failed.")
-		return false
+		return err
 	}
 	sig, _ := base64.StdEncoding.DecodeString(sign)
 	err = rsa.VerifyPKCS1v15(pubKey, crypto.SHA256, hashed[:], sig)
 	if err != nil {
 		log.Error(err, "rsa2 public check sign failed.")
-		return false
+		return err
 	}
-	return true
+	return nil
 }
 
 func genPriKey(privateKey []byte, privateKeyType int64) (*rsa.PrivateKey, error) {
