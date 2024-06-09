@@ -8,4 +8,7 @@ const (
 
 	TRADE_PRECREATE_METHOD = "alipay.trade.precreate"
 	ALIPAY_SUCCESS_CODE    = "10000"
+
+	NOTIFY_SUCCESS = "success"
+	NOTIFU_ERROR   = "error"
 )
