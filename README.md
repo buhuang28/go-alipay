@@ -9,13 +9,12 @@
 
 * #### 接受支付异步通知且验签
 
+* #### alipay.trade.query(统一收单交易查询)
 
 
 
 #### 待完成功能
 
-
-* #### alipay.trade.query(统一收单交易查询)
 * #### alipay.trade.close(统一收单交易关闭接口)
 * #### alipay.trade.refund(统一收单交易退款接口)
 * #### alipay.trade.fastpay.refund.query(统一收单交易退款查询)
