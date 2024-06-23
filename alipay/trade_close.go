@@ -10,35 +10,35 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// alipay.trade.precreate(统一收单线下交易预创建)
-func TradePrecreate(data dto.AlipayTradePrecreateReq) (dto.AlipayTradePrecreateResponse, error) {
+// alipay.trade.close(统一收单交易关闭接口)
+func TradeClose(data dto.AlipayTradeCloseReq) (dto.AlipayTradeCloseResponse, error) {
 	ceateReq := dto.NewAlipayPublicReq(cst.TRADE_PRECREATE_METHOD, caches.AlipayConfigCache.AlipayNotifyUrl, data.ToString())
 	err := ceateReq.RSASign()
 	if err != nil {
 		log.Error(err)
-		return dto.AlipayTradePrecreateResponse{}, err
+		return dto.AlipayTradeCloseResponse{}, err
 	}
 
 	resp := utils.HttpPostForm(caches.AlipayConfigCache.AlipayUrl, ceateReq.ToUrlValues())
 	if resp.Err != nil {
 		log.Error(resp.Err)
-		return dto.AlipayTradePrecreateResponse{}, resp.Err
+		return dto.AlipayTradeCloseResponse{}, resp.Err
 	}
 	if len(resp.Data) == 0 {
 		log.Error(etype.NullDataError)
-		return dto.AlipayTradePrecreateResponse{}, etype.NullDataError
+		return dto.AlipayTradeCloseResponse{}, etype.NullDataError
 	}
 
-	createResp := new(dto.AlipayTradePrecreateResp)
+	createResp := new(dto.AlipayTradeCloseResp)
 
 	err = json.Unmarshal(resp.Data, createResp)
 	if err != nil {
 		log.Error(err)
-		return dto.AlipayTradePrecreateResponse{}, err
+		return dto.AlipayTradeCloseResponse{}, err
 	}
-	if createResp.AlipayTradePrecreateResponse.Code != cst.ALIPAY_SUCCESS_CODE {
-		log.Errorf("创建预支付订单失败:%s", createResp.AlipayTradePrecreateResponse.Msg)
-		return dto.AlipayTradePrecreateResponse{}, etype.AlipayTradePrecreateError
+	if createResp.AlipayTradeCloseResponse.Code != cst.ALIPAY_SUCCESS_CODE {
+		log.Errorf("关闭订单失败:%s", createResp.AlipayTradeCloseResponse.Msg)
+		return dto.AlipayTradeCloseResponse{}, etype.AlipayTradePrecreateError
 	}
-	return createResp.AlipayTradePrecreateResponse, nil
+	return createResp.AlipayTradeCloseResponse, nil
 }
