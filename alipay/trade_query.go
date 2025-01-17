@@ -12,14 +12,14 @@ import (
 
 // alipay.trade.query(统一收单交易查询)
 func TradeQuery(data dto.AlipayTradeQueryReq) (dto.AlipayTradeQueryResponse, error) {
-	ceateReq := dto.NewAlipayPublicReq(cst.TRADE_QUERY_METHOD, caches.AlipayConfigCache.AlipayNotifyUrl, data.ToString())
+	ceateReq := dto.NewAlipayPublicReq(cst.TRADE_QUERY_METHOD, caches.AlipayConfig.AlipayNotifyUrl, data.ToString())
 	err := ceateReq.RSASign()
 	if err != nil {
 		log.Error(err)
 		return dto.AlipayTradeQueryResponse{}, err
 	}
 
-	resp := utils.HttpPostForm(caches.AlipayConfigCache.AlipayUrl, ceateReq.ToUrlValues())
+	resp := utils.HttpPostForm(caches.AlipayConfig.AlipayUrl, ceateReq.ToUrlValues())
 	if resp.Err != nil {
 		log.Error(resp.Err)
 		return dto.AlipayTradeQueryResponse{}, resp.Err

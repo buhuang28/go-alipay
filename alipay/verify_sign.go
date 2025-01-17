@@ -27,5 +27,5 @@ func VerifySign(data string) error {
 	}
 	sort.Strings(signContent)
 	src := strings.Join(signContent, "&")
-	return utils.Rsa2PubSign(caches.AlipayConfigCache.AlipayPublicKey, src, sign)
+	return utils.Rsa2PubSign(caches.AlipayConfig.AlipayPublicKey, src, sign)
 }

@@ -3,7 +3,6 @@ package utils
 import (
 	"bytes"
 	"encoding/json"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 	"net/url"
@@ -40,14 +39,12 @@ func HttpPostJson(api string, param interface{}) HttpResp {
 	reader := bytes.NewReader(dataBytes)
 	request, err := http.NewRequest("POST", api, reader)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
 	request.Header.Set("Content-Type", "application/json;charset=UTF-8")
 	resp, err := httpClient.Do(request)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -68,7 +65,6 @@ func HttpPostJsonAndHeader(api string, header map[string]string, param interface
 	reader := bytes.NewReader(dataBytes)
 	request, err := http.NewRequest("POST", api, reader)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -80,7 +76,6 @@ func HttpPostJsonAndHeader(api string, header map[string]string, param interface
 	request.Header.Set("Content-Type", "application/json;charset=UTF-8")
 	resp, err := httpClient.Do(request)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -96,7 +91,6 @@ func HttpGet(api string) HttpResp {
 	var result HttpResp
 	request, err := http.NewRequest("GET", api, nil)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -104,7 +98,6 @@ func HttpGet(api string) HttpResp {
 	request.URL.RawQuery = q.Encode()
 	resp, err := httpClient.Do(request)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -121,7 +114,6 @@ func HttpGetWithHeader(api string, h map[string]string) HttpResp {
 	var result HttpResp
 	request, err := http.NewRequest("GET", api, nil)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -133,7 +125,6 @@ func HttpGetWithHeader(api string, h map[string]string) HttpResp {
 	request.URL.RawQuery = q.Encode()
 	resp, err := httpClient.Do(request)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
@@ -150,14 +141,12 @@ func HttpPostForm(api string, data url.Values) HttpResp {
 	var result HttpResp
 	r, err := http.NewRequest("POST", api, strings.NewReader(data.Encode())) // URL-encoded payload
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := httpClient.Do(r)
 	if err != nil {
-		log.Infof("请求:%s 出错:%s", api, err.Error())
 		result.Err = err
 		return result
 	}

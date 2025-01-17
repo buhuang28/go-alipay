@@ -12,14 +12,14 @@ import (
 
 // alipay.trade.close(统一收单交易关闭接口)
 func TradeClose(data dto.AlipayTradeCloseReq) (dto.AlipayTradeCloseResponse, error) {
-	ceateReq := dto.NewAlipayPublicReq(cst.TRADE_PRECREATE_METHOD, caches.AlipayConfigCache.AlipayNotifyUrl, data.ToString())
+	ceateReq := dto.NewAlipayPublicReq(cst.TRADE_PRECREATE_METHOD, caches.AlipayConfig.AlipayNotifyUrl, data.ToString())
 	err := ceateReq.RSASign()
 	if err != nil {
 		log.Error(err)
 		return dto.AlipayTradeCloseResponse{}, err
 	}
 
-	resp := utils.HttpPostForm(caches.AlipayConfigCache.AlipayUrl, ceateReq.ToUrlValues())
+	resp := utils.HttpPostForm(caches.AlipayConfig.AlipayUrl, ceateReq.ToUrlValues())
 	if resp.Err != nil {
 		log.Error(resp.Err)
 		return dto.AlipayTradeCloseResponse{}, resp.Err

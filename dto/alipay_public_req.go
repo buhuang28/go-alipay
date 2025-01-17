@@ -28,7 +28,7 @@ type AlipayPublicReq struct {
 
 func NewAlipayPublicReq(method, notifyUrl, bizContent string) AlipayPublicReq {
 	return AlipayPublicReq{
-		AppId:      caches.AlipayConfigCache.AlipayAppId,
+		AppId:      caches.AlipayConfig.AlipayAppId,
 		Method:     method,
 		Format:     cst.ALIPAY_FORMAT,
 		Charset:    cst.ALIPAY_CHARSET,
@@ -79,7 +79,7 @@ func (a *AlipayPublicReq) RSASign() error {
 	buf.WriteString("&version=")
 	buf.WriteString(a.Version)
 
-	sign, err := utils.RsaSha256(caches.AlipayConfigCache.AppPrivateKey, buf.String())
+	sign, err := utils.RsaSha256(caches.AlipayConfig.AppPrivateKey, buf.String())
 	if err != nil {
 		log.Error(err)
 		return err

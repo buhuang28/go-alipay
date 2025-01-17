@@ -8,8 +8,6 @@ import (
 
 type Config struct {
 	AlipayConfig AlipayConfig `json:"alipay_config,omitempty"`
-	DBConfig     DBConfig     `json:"db_config,omitempty"`
-	SignConfig   SignConfig   `json:"sign_config,omitempty"`
 }
 
 func LoadConfig(cfgPath string) *Config {
@@ -20,6 +18,15 @@ func LoadConfig(cfgPath string) *Config {
 	if len(fileBytes) == 0 {
 		panic(etype.NullDataError)
 	}
+	cfg := new(Config)
+	err := json.Unmarshal(fileBytes, cfg)
+	if err != nil {
+		panic(err)
+	}
+	return cfg
+}
+
+func LoadConfigBytes(fileBytes []byte) *Config {
 	cfg := new(Config)
 	err := json.Unmarshal(fileBytes, cfg)
 	if err != nil {
